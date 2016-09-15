@@ -1,5 +1,9 @@
 package net.serenitybdd.dojo.supermarket.model;
 
+import net.serenitybdd.dojo.supermarket.Products;
+
+import java.util.Map;
+
 public class Teller {
 
     private final SupermarketCatalog catalog;
@@ -10,6 +14,8 @@ public class Teller {
     }
 
     public Receipt checksOutArticlesFrom(ShoppingCart theCart) {
-        return null;
+        Receipt receipt=new Receipt();
+        receipt.setTotalPrice(theCart.getCartMap().values().stream().mapToDouble(item-> item.doubleValue()).sum());
+        return receipt;
     }
 }

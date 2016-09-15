@@ -1,7 +1,23 @@
 package net.serenitybdd.dojo.supermarket.model;
 
+import net.serenitybdd.dojo.supermarket.Products;
+
 public class Receipt {
-    public double getTotalPrice() {
-        return 0.0d;
+
+    private double totalPrice;
+
+    public Receipt() {
+
     }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+
+        this.totalPrice=totalPrice;
+    }
+
+
 }
