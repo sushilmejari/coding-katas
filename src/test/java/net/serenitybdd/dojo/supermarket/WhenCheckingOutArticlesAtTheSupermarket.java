@@ -99,22 +99,15 @@ public class WhenCheckingOutArticlesAtTheSupermarket {
     @Test
     public void should_be_able_to_check_out_toothbrush_with_buy_two_get_one_free() throws Exception {
         //Given
-
         ShoppingCart theCartWithToothbrush = new ShoppingCart();
-        theCartWithToothbrush.addProductsToCart(Products.TOOTHBRUSH, 7);
-        theCartWithToothbrush.addProductsToCart(Products.TOOTHPASTE, 3);
-        theCartWithToothbrush.addProductsToCart(Products.TOOTHBRUSH, 3);
-
+        theCartWithToothbrush.addProductsToCart(Products.TOOTHBRUSH, 6);
+        theCartWithToothbrush.addProductsToCart(Products.TOOTHBRUSH, 5);
         Offer.addOfferOnProduct(Products.TOOTHBRUSH).applyOffer(OfferType.BUY_TWO_GET_ONE);
-        Offer.addOfferOnProduct(Products.TOOTHPASTE).applyOffer(OfferType.BUY_ONE_GET_ONE);
-
         //When
         Receipt receipt = teller.checksOutArticlesFrom(theCartWithToothbrush);
-
         //Then
-        assertThat(teller.getOffers(), hasItems(OfferType.BUY_TWO_GET_ONE, OfferType.BUY_ONE_GET_ONE));
-        assertThat(receipt.getQuantityOf(Products.TOOTHPASTE), equalTo(6));
-        assertThat(receipt.getQuantityOf(Products.TOOTHBRUSH), equalTo(15));
+        assertThat(teller.getOffers(), hasItems(OfferType.BUY_TWO_GET_ONE));
+        assertThat(receipt.getQuantityOf(Products.TOOTHBRUSH), equalTo(16));
 
     }
 
