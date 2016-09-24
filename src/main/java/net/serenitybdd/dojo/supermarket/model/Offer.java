@@ -12,17 +12,40 @@ import java.util.Map;
  */
 public class Offer {
 
+    public static Map<Products, List<OfferType>> offersOnProduct = new HashMap<>();
 
-    public final Map<OfferType, List<Products>> offerMap = new HashMap<>();
+    public static OffresBulder addOfferOnProduct(Products product) {
+        return new OffresBulder(product);
+    }
 
-    {
-        List<Products> buyTwoGetOneProducts = new ArrayList<>();
-        buyTwoGetOneProducts.add(Products.TOOTHPASTE);
-        offerMap.put(OfferType.BUY_TWO_GET_ONE, buyTwoGetOneProducts);
+    public static Map<Products, Integer> checkOfferAndApply(Products product, int quantity, List<OfferType> offers) {
+        Map<Products, Integer> updatedItem = new HashMap<>();
+        if (offersOnProduct.size() != 0) {
+            if (offersOnProduct.get(product).contains(OfferType.BUY_TWO_GET_ONE)) {
+                offers.add(OfferType.BUY_TWO_GET_ONE);
+                quantity = quantity + (quantity / 2);
+            }
+            if (offersOnProduct.get(product).contains(OfferType.BUY_ONE_GET_ONE)) {
+                offers.add(OfferType.BUY_ONE_GET_ONE);
+                quantity = quantity + quantity;
+            }
+        }
+        updatedItem.put(product, Integer.valueOf(quantity));
+        return updatedItem;
+    }
+
+    public static class OffresBulder {
+        Products product;
+
+        public OffresBulder(Products product) {
+            this.product = product;
+            offersOnProduct.put(product, new ArrayList<>());
+        }
+
+        public void applyOffer(OfferType offerType) {
+            offersOnProduct.get(product).add(offerType);
+        }
 
     }
 
-    public Map<OfferType, List<Products>> getOfferMap() {
-        return offerMap;
-    }
 }

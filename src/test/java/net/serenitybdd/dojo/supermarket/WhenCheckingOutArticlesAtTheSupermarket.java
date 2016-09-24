@@ -13,11 +13,10 @@ public class WhenCheckingOutArticlesAtTheSupermarket {
     ShoppingCart theCart;
 
     @Before
-    public void initializeCart(){
+    public void initializeCart() {
         catalog = new DummyCatalog();
         teller = new Teller(catalog);
         theCart = new ShoppingCart();
-//        ShoppingCart shoppingCart = new ShoppingCart();
     }
 
     @Test
@@ -87,7 +86,7 @@ public class WhenCheckingOutArticlesAtTheSupermarket {
     }
 
     @Test
-    public void teller_should_be_able_to_checkout_multiple_products(){
+    public void teller_should_be_able_to_checkout_multiple_products() {
         ShoppingCart theCart = new ShoppingCart();
         theCart.addProductsToCart(Products.TOOTHPASTE, 1);
         theCart.addProductsToCart(Products.TOOTHBRUSH, 1);
@@ -101,15 +100,21 @@ public class WhenCheckingOutArticlesAtTheSupermarket {
     public void should_be_able_to_check_out_toothbrush_with_buy_two_get_one_free() throws Exception {
         //Given
 
-        ShoppingCart theCartWithToothPaste = new ShoppingCart();
-        theCartWithToothPaste.addProductsToCart(Products.TOOTHBRUSH, 7);
+        ShoppingCart theCartWithToothbrush = new ShoppingCart();
+        theCartWithToothbrush.addProductsToCart(Products.TOOTHBRUSH, 7);
+        theCartWithToothbrush.addProductsToCart(Products.TOOTHPASTE, 3);
+        theCartWithToothbrush.addProductsToCart(Products.TOOTHBRUSH, 3);
+
+        Offer.addOfferOnProduct(Products.TOOTHBRUSH).applyOffer(OfferType.BUY_TWO_GET_ONE);
+        Offer.addOfferOnProduct(Products.TOOTHPASTE).applyOffer(OfferType.BUY_ONE_GET_ONE);
 
         //When
-        Receipt receipt = teller.checksOutArticlesFrom(theCartWithToothPaste);
+        Receipt receipt = teller.checksOutArticlesFrom(theCartWithToothbrush);
 
         //Then
-        assertThat(teller.getOffers(), hasItem(OfferType.BUY_TWO_GET_ONE));
-        assertThat(receipt.getQuantityOf(Products.TOOTHBRUSH), equalTo(10));
+        assertThat(teller.getOffers(), hasItems(OfferType.BUY_TWO_GET_ONE, OfferType.BUY_ONE_GET_ONE));
+        assertThat(receipt.getQuantityOf(Products.TOOTHPASTE), equalTo(6));
+        assertThat(receipt.getQuantityOf(Products.TOOTHBRUSH), equalTo(15));
 
     }
 

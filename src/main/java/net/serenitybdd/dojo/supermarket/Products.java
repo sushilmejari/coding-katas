@@ -5,7 +5,7 @@ package net.serenitybdd.dojo.supermarket;
  */
 public enum Products {
 
-   EMPTY(0), TOOTHPASTE(10), TOOTHBRUSH(20);
+    EMPTY(0), TOOTHPASTE(10), TOOTHBRUSH(20);
 
     private int pricePerQuantity;
 

@@ -26,21 +26,8 @@ public class Receipt {
 
     public void addProduct(Products product, int quantity, List<OfferType> offersType) {
         totalPrice += quantity * product.getPricePerQuantity();
-        int offerdQuantity = calculateDeals(product, quantity, offersType);
-        productsMap.put(product, offerdQuantity);
-
-
+        productsMap.putAll(Offer.checkOfferAndApply(product, quantity, offersType));
     }
-
-    private int calculateDeals(Products product, int quantity, List<OfferType> offersType) {
-        if (new Offer().getOfferMap().containsKey(OfferType.BUY_TWO_GET_ONE)) {
-            offersType.add(OfferType.BUY_TWO_GET_ONE);
-            quantity = quantity / 2 + quantity;
-            return quantity;
-        }
-        return quantity;
-    }
-
     public int getQuantityOf(Products products) {
 
         return productsMap.getOrDefault(products, 0);
