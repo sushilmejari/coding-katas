@@ -111,5 +111,22 @@ public class WhenCheckingOutArticlesAtTheSupermarket {
 
     }
 
+    @Test
+    public void should_be_able_to_check_out_Shirt_with_buy_four_get_one_free() throws Exception {
+        //Given
+        ShoppingCart theCartWithToothbrush = new ShoppingCart();
+        theCartWithToothbrush.addProductsToCart(Products.SHIRT, 7);
+        theCartWithToothbrush.addProductsToCart(Products.TOOTHBRUSH, 3);
+
+        Offer.addOfferOnProduct(Products.SHIRT).applyOffer(OfferType.BUY_FOUR_GET_ONE);
+        //When
+        Receipt receipt = teller.checksOutArticlesFrom(theCartWithToothbrush);
+        //Then
+        assertThat(teller.getOffers(), hasItems(OfferType.BUY_FOUR_GET_ONE));
+        assertThat(receipt.getQuantityOf(Products.SHIRT), equalTo(8));
+
+    }
+
+
 
 }

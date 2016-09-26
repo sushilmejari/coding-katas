@@ -20,7 +20,7 @@ public class Offer {
 
     public static Map<Products, Integer> checkOfferAndApply(Products product, int quantity, List<OfferType> offers) {
         Map<Products, Integer> updatedItem = new HashMap<>();
-        if (offersOnProduct.size() != 0) {
+        if (offersOnProduct.containsKey(product)) {
             if (offersOnProduct.get(product).contains(OfferType.BUY_TWO_GET_ONE)) {
                 offers.add(OfferType.BUY_TWO_GET_ONE);
                 quantity = quantity + (quantity / 2);
@@ -28,6 +28,10 @@ public class Offer {
             if (offersOnProduct.get(product).contains(OfferType.BUY_ONE_GET_ONE)) {
                 offers.add(OfferType.BUY_ONE_GET_ONE);
                 quantity = quantity + quantity;
+            }
+            if (offersOnProduct.get(product).contains(OfferType.BUY_FOUR_GET_ONE)) {
+                offers.add(OfferType.BUY_FOUR_GET_ONE);
+                quantity = quantity + (quantity / 4);
             }
         }
         updatedItem.put(product, Integer.valueOf(quantity));

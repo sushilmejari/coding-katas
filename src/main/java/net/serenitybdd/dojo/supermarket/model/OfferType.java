@@ -7,5 +7,6 @@ public enum OfferType {
 
     BUY_TWO_GET_ONE,
     BUY_ONE_GET_ONE,
+    BUY_FOUR_GET_ONE,
     NO_OFFER;
 }
