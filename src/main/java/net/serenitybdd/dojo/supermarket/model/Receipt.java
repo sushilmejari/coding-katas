@@ -25,8 +25,11 @@ public class Receipt {
     }
 
     public void addProduct(Products product, int quantity, List<OfferType> offersType) {
-        totalPrice += quantity * product.getPricePerQuantity();
-        productsMap.putAll(Offer.checkOfferAndApply(product, quantity, offersType));
+        int base_qty = quantity;
+        productsMap.putAll(Offer.checkOfferAcheckOfferWithQuantityAndApply(product, quantity, offersType));
+        //int discounted_amount=Offer.checkOfferWithDiscountPriceAndApply(product, quantity, offersType));
+
+        totalPrice += base_qty * product.getPricePerQuantity();
     }
     public int getQuantityOf(Products products) {
 

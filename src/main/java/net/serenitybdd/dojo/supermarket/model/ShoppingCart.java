@@ -22,6 +22,7 @@ public class ShoppingCart {
         cartMap.put(product, quantity + cartMap.getOrDefault(product, 0));
     }
 
+
     private boolean checkOffer(Products product) {
         return Offer.offersOnProduct.containsKey(product);
     }
